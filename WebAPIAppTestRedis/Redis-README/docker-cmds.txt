@@ -1,2 +1,9 @@
 Baixando a imagem do ultimo Redis:
 PowerShell: docker pull redis
+
+Criando uma rede virtual pra abrir o Docker:
+docker network create some-network
+
+
+Rodando o Redis, abrindo a porta pra externo e entrando na rede do Docker:
+ docker run -it -p 6379:6379 --network some-network --rm redis

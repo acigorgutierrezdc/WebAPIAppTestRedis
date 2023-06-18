@@ -38,7 +38,8 @@ namespace WebAPIAppTestRedis.Controllers
             ConnectionMultiplexer cluster = ConnectionMultiplexer.Connect(options);
             IDatabase db = cluster.GetDatabase();
 
-            db.StringSet("foo", "bar");
+            db.StringSet("foo", "bar"); //Verificar TTL
+
             Console.WriteLine(db.StringGet("foo")); // prints bar
 
 
