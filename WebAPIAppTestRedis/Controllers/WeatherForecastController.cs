@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using NRedisStack;
+using NRedisStack.RedisStackCommands;
+using StackExchange.Redis;
 
 namespace WebAPIAppTestRedis.Controllers
 {
@@ -21,6 +24,25 @@ namespace WebAPIAppTestRedis.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            ConfigurationOptions options = new ConfigurationOptions
+            {
+                //list of available nodes of the cluster along with the endpoint port.
+                EndPoints = {
+                                { "localhost", 6379 }
+                            },
+
+                            AbortOnConnectFail = false
+
+                            };
+
+            ConnectionMultiplexer cluster = ConnectionMultiplexer.Connect(options);
+            IDatabase db = cluster.GetDatabase();
+
+            db.StringSet("foo", "bar");
+            Console.WriteLine(db.StringGet("foo")); // prints bar
+
+
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),

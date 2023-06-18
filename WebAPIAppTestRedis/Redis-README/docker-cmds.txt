@@ -1,0 +1,2 @@
+Baixando a imagem do ultimo Redis:
+PowerShell: docker pull redis
